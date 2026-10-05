@@ -1,0 +1,405 @@
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("../fonts/bricolage-grotesque-latin.woff2") format("woff2");
+  font-weight: 200 800;
+  font-stretch: 75% 100%;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f3f4f1;
+  --ink: #1a211c;
+  --muted: #5b675f;
+  --rule: #d6dcd5;
+  --focus: #1f7a48;
+
+  /* Sequential ramp for the calendar: one hue, light to dark. */
+  --c0: #e2e6e0;
+  --c1: #a7d9b4;
+  --c2: #53ae76;
+  --c3: #1f7a48;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161c19;
+    --ink: #e4eae5;
+    --muted: #9aa69f;
+    --rule: #2b342f;
+    --focus: #63cf8c;
+
+    /* Dark mode flips the anchor: more activity is lighter. */
+    --c0: #232b27;
+    --c1: #256641;
+    --c2: #2e8c55;
+    --c3: #63cf8c;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-optical-sizing: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+.page {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (min-width: 40rem) {
+  .page {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Masthead */
+
+.masthead {
+  padding-top: 1.5rem;
+}
+
+.who {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.who:hover {
+  text-decoration: underline;
+}
+
+.avatar {
+  border-radius: 50%;
+  background: var(--c0);
+}
+
+.status {
+  margin-top: clamp(3rem, 12vh, 7rem);
+  color: var(--muted);
+  max-width: 34rem;
+}
+
+/* The latest push: the one big moment on the page */
+
+.now {
+  margin-top: clamp(3rem, 12vh, 7rem);
+}
+
+.now-lead {
+  font-size: 1.125rem;
+  color: var(--muted);
+}
+
+.now-repo {
+  margin-top: 0.25rem;
+  font-size: clamp(3.25rem, 14vw, 8.5rem);
+  font-weight: 760;
+  font-stretch: 75%;
+  line-height: 0.88;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+}
+
+.now-repo a {
+  text-decoration: none;
+}
+
+.now-repo a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 0.05em;
+  text-underline-offset: 0.08em;
+}
+
+.now-when {
+  margin-top: 0.75rem;
+  font-size: clamp(1.5rem, 4.5vw, 2.25rem);
+  font-weight: 500;
+  font-stretch: 87.5%;
+  line-height: 1.2;
+}
+
+.now-desc {
+  margin-top: 1.25rem;
+  max-width: 34rem;
+  font-size: 1.1875rem;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .now {
+    animation: arrive 600ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  @keyframes arrive {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+  }
+}
+
+/* Sections */
+
+.recent,
+.started {
+  margin-top: 4.5rem;
+}
+
+h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  font-stretch: 87.5%;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.caption {
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+  max-width: 34rem;
+}
+
+/* Recently pushed repos */
+
+.repos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.repo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 1rem;
+  padding: 0.875rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+.repo:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.repo-name {
+  font-size: 1.125rem;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.repo-fork {
+  margin-left: 0.5rem;
+  padding: 0 0.45em;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.repo-desc {
+  color: var(--muted);
+}
+
+.repo-when,
+.repo-lang {
+  text-align: right;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.repo-when {
+  align-self: baseline;
+}
+
+/* Calendar of new repos */
+
+.calendar-wrap {
+  position: relative;
+  max-width: 30rem;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: 2.75rem repeat(12, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.calendar .month,
+.calendar .year {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.calendar .month {
+  text-align: center;
+  padding-bottom: 0.25rem;
+}
+
+.calendar .year {
+  align-self: center;
+}
+
+.cell {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  background: var(--c0);
+}
+
+.cell[data-level="1"] {
+  background: var(--c1);
+}
+
+.cell[data-level="2"] {
+  background: var(--c2);
+}
+
+.cell[data-level="3"] {
+  background: var(--c3);
+}
+
+.cell.is-out {
+  background: transparent;
+}
+
+button.cell {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  cursor: default;
+}
+
+button.cell:hover {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+
+.tip {
+  position: absolute;
+  z-index: 1;
+  max-width: 16rem;
+  padding: 0.5rem 0.625rem;
+  border-radius: 6px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 8px));
+  white-space: nowrap;
+}
+
+.tip strong {
+  display: block;
+  font-weight: 650;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.legend .cell {
+  width: 0.875rem;
+  margin-left: 0.375rem;
+}
+
+.legend-label {
+  margin-right: 0.25rem;
+}
+
+.as-list {
+  margin-top: 1.25rem;
+  color: var(--muted);
+}
+
+.as-list summary {
+  cursor: pointer;
+  width: fit-content;
+}
+
+.as-list ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.as-list li + li {
+  margin-top: 0.25rem;
+}
+
+.as-list strong {
+  color: var(--ink);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Footer */
+
+.foot {
+  margin-top: 5rem;
+  padding: 1.5rem 0 3rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+.foot p + p {
+  margin-top: 0.25rem;
+}

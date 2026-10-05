@@ -1,0 +1,23 @@
+version: 2
+updates:
+  # Version-update PRs wait until a release is 7 days old, matching the
+  # Gemfile's `cooldown: 7`. Security updates are not delayed.
+  - package-ecosystem: bundler
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      gems:
+        patterns: ["*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ["*"]

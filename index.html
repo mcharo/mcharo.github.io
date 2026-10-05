@@ -1,23 +1,57 @@
 ---
 layout: default
 ---
+{%- assign user = site.github_username -%}
+<main class="page" id="activity" data-user="{{ user }}">
+  <header class="masthead">
+    <a class="who" href="https://github.com/{{ user }}">
+      <img class="avatar" src="https://avatars.githubusercontent.com/{{ user }}?s=96" alt="" width="36" height="36">
+      {{ user }} on GitHub
+    </a>
+  </header>
 
-<div class="home">
+  <p class="status" id="status" role="status" hidden></p>
+  <noscript>
+    <p class="status">This page loads activity from GitHub with JavaScript. You can also browse
+      <a href="https://github.com/{{ user }}?tab=repositories">{{ user }}’s repositories</a> directly.</p>
+  </noscript>
 
-  <h1 class="page-heading">Posts</h1>
+  <section class="now" id="now" hidden>
+    <p class="now-lead">Last pushed to</p>
+    <h1 class="now-repo"><a id="now-repo" href="https://github.com/{{ user }}"></a></h1>
+    <p class="now-when"><time id="now-when"></time></p>
+    <p class="now-desc" id="now-desc"></p>
+  </section>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+  <section class="recent" id="recent" aria-labelledby="recent-heading" hidden>
+    <h2 id="recent-heading">Before that</h2>
+    <ol class="repos" id="recent-list"></ol>
+  </section>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
+  <section class="started" id="started" aria-labelledby="started-heading" hidden>
+    <h2 id="started-heading">New repos by month</h2>
+    <p class="caption">Each square is a month, shaded by how many repos were started in it. Forks aren’t counted.</p>
+    <div class="calendar-wrap">
+      <div class="calendar" id="calendar" role="group" aria-labelledby="started-heading"></div>
+      <div class="tip" id="tip" role="tooltip" hidden></div>
+    </div>
+    <div class="legend" aria-hidden="true">
+      <span class="legend-label">Repos started</span>
+      <span class="cell" data-level="0"></span>0
+      <span class="cell" data-level="1"></span>1
+      <span class="cell" data-level="2"></span>2
+      <span class="cell" data-level="3"></span>3+
+    </div>
+    <details class="as-list">
+      <summary>List by year</summary>
+      <ul id="started-list"></ul>
+    </details>
+  </section>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
-</div>
+  <footer class="foot">
+    <p id="summary"></p>
+    <p>Data comes from the public GitHub API and is cached in your browser for 10 minutes.
+      <a href="https://github.com/{{ user }}/{{ user }}.github.io">Site source</a></p>
+  </footer>
+</main>
+<script type="module" src="{{ '/assets/js/activity.js' | relative_url }}"></script>
